@@ -14,36 +14,30 @@ import com.zj.ipai.ipai.fragments.ThirdFragment;
  */
 
 public class MainManager {
-     private static BaseFragment firstFragment,secondFragment,thirdFragment;
+     private static BaseFragment firstFragment, secondFragment, thirdFragment;
 
      public enum Type {
           FIRST, SECOND, THIRD
      }
 
-     private static BaseFragment mCurrentFragment = null;
-
-     public static Fragment getFragment(Type tag) {
-          switch (tag) {
-               case FIRST:
-                    if(firstFragment==null)
-                         mCurrentFragment=firstFragment=new FirstFragment ();
-                    mCurrentFragment=firstFragment;
-                    break;
-               case SECOND:
-                    if(secondFragment==null)
-                         secondFragment=new SecondFragment ();
-                    mCurrentFragment=secondFragment;
-                    break;
-               case THIRD:
-                    if(thirdFragment==null)
-                         thirdFragment=new ThirdFragment ();
-                    mCurrentFragment=thirdFragment;
-                    break;
-          }
-          return mCurrentFragment;
+     private MainManager() {
      }
 
-     public static Fragment getCurrentFragment() {
-          return mCurrentFragment;
+     public static Fragment newInstance(int position) {
+          switch (position) {
+               case 0:
+                    if (firstFragment == null)
+                         firstFragment = new FirstFragment ();
+                    return firstFragment;
+               case 1:
+                    if(secondFragment==null)
+                         secondFragment=new SecondFragment ();
+                    return secondFragment;
+               case 2:
+                    if(thirdFragment==null)
+                         thirdFragment=new ThirdFragment ();
+                    return thirdFragment;
+          }
+          return null;
      }
 }

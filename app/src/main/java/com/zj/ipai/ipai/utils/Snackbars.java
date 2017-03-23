@@ -17,8 +17,7 @@ public class Snackbars {
      private static Snackbar sSnackbar;
 
      public static void showSnackar(View view, String content) {
-          sSnackbar = Snackbar.make (view, content, Snackbar.LENGTH_SHORT);
-          sSnackbar.show ();
+          Snackbar.make (view, content, Snackbar.LENGTH_SHORT).show ();
 
      }
 

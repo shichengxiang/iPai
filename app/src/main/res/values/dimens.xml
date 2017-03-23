@@ -34,4 +34,12 @@
     <dimen name="dp29">29dp</dimen>
     <dimen name="dp30">30dp</dimen>
     <dimen name="dp56">56dp</dimen>
+
+
+    <dimen name="txt_large">18dp</dimen>
+    <dimen name="txt_normal">16dp</dimen>
+    <dimen name="txt_small1">14dp</dimen>
+    <dimen name="txt_small2">12dp</dimen>
+    <dimen name="txt_small3">10dp</dimen>
+
 </resources>

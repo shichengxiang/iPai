@@ -22,8 +22,7 @@ public class ThirdFragment extends BaseFragment {
      @Nullable
      @Override
      public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-          View contentView=inflater.inflate (R.layout.fragment_third,container);
-          ButterKnife.bind (contentView);
+          View contentView=inflater.inflate (R.layout.fragment_third,container,false);
           return contentView;
      }
 }
