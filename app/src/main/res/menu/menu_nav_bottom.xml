@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.zj.ipai.ipai.activities.MainActivity">
+    <item
+        android:id="@+id/tab_favorites"
+        android:enabled="true"
+        android:icon="@drawable/near_me"
+        android:title="first"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/tab_nearby"
+        android:enabled="true"
+        android:icon="@drawable/near_me"
+        android:title="second"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/tab_friends"
+        android:enabled="true"
+        android:icon="@drawable/near_me"
+        android:title="third"
+        app:showAsAction="ifRoom"/>
+</menu>

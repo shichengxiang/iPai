@@ -1,11 +1,11 @@
 package com.zj.ipai.ipai.Customs;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.LayoutRes;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.zj.ipai.ipai.R;
@@ -40,8 +40,7 @@ public class BottomBar extends RelativeLayout {
      }
 
      public void setLayout(@LayoutRes int layout, OnTabChangedListener lisener) {
-          ViewGroup.LayoutParams params=new ViewGroup.LayoutParams (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-          setLayoutParams (params);
+          RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
           View inflate = LayoutInflater.from (mContext).inflate (layout, null);
           if (items == null)
                items = new ArrayList<> ();
@@ -60,6 +59,8 @@ public class BottomBar extends RelativeLayout {
           items.get (2).tv = inflate.findViewById (R.id.tv_b3);
           this.mListener = lisener;
           setListener ();
+          addView (inflate,params);
+          setBackgroundColor (Color.parseColor ("#cccccc"));
 
      }
 

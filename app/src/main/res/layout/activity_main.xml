@@ -1,47 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    app:layout_scrollFlags="scroll|exitUntilCollapsed"
-    tools:context="com.zj.ipai.ipai.activities.MainActivity">
+    android:fitsSystemWindows="true">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
-
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </android.support.v4.view.ViewPager>
     <FrameLayout
         android:id="@+id/contentContainer"
-        android:layout_width="0dp"
-        android:layout_height="0dp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomBar"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
     </FrameLayout>
 
-    <com.roughike.bottombar.BottomBar
-        android:id="@+id/mBottomBar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp56"
-        android:layout_gravity="bottom"
-        app:bb_activeTabColor="@android:color/holo_blue_dark"
-        app:bb_tabXmlResource="@xml/bottom_bar">
-    </com.roughike.bottombar.BottomBar>
 
-</android.support.design.widget.CoordinatorLayout>
+    <!--<android.support.design.widget.BottomNavigationView-->
+    <!--android:id="@+id/bottom_nav"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:itemBackground="@color/bg"-->
+    <!--app:itemIconTint="#ffffff"-->
+    <!--app:itemTextColor="@color/selector_txt"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:fitsSystemWindows="true"-->
+    <!--app:menu="@menu/menu_nav_bottom"-->
+    <!--android:visibility="gone">-->
+
+    <!--</android.support.design.widget.BottomNavigationView>-->
+
+    <com.zj.ipai.ipai.Customs.BottomBar
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp30"
+        android:layout_alignParentBottom="true"
+        android:fitsSystemWindows="true">
+    </com.zj.ipai.ipai.Customs.BottomBar>
+</RelativeLayout>

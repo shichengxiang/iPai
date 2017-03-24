@@ -2,16 +2,16 @@ package com.zj.ipai.ipai.activities;
 
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.view.Menu;
+import android.support.v7.widget.SearchView;
 import android.view.MenuItem;
 
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabSelectListener;
+import com.zj.ipai.ipai.Customs.BottomBar;
 import com.zj.ipai.ipai.R;
 import com.zj.ipai.ipai.fragments.BaseFragment;
 import com.zj.ipai.ipai.fragments.FirstFragment;
@@ -20,13 +20,13 @@ import com.zj.ipai.ipai.fragments.ThirdFragment;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements SearchView.OnQueryTextListener {
 
-     @BindView (R.id.mBottomBar)
+     @NonNull
+     @BindView (R.id.bottomBar)
      BottomBar mBottomBar;
-     @BindView (R.id.viewPager)
-     ViewPager mViewPager;
-
+//     @BindView (R.id.bottom_nav)
+//     BottomNavigationView mBottomNavigationView;
 
      private String[] tags = {"one", "two", "three"};
      private int curIndex = 0;
@@ -46,14 +46,32 @@ public class MainActivity extends BaseActivity {
      }
 
      private void init(Bundle bundle) {
-//          initFragmentUI (bundle);
-          initViewPager ();
-          mBottomBar.setOnTabSelectListener (new OnTabSelectListener () {
+          initFragmentUI (bundle);
+//          initViewPager ();
+//          mBottomBar.setOnTabSelectListener (new OnTabSelectListener () {
+//               @Override
+//               public void onTabSelected(@IdRes int tabId) {
+//                    switchFragment (curIndex, getPositionById (tabId));
+//               }
+//          });
+          mBottomBar.setLayout (R.layout.bottombar, new BottomBar.OnTabChangedListener () {
                @Override
-               public void onTabSelected(@IdRes int tabId) {
-                    switchFragment (curIndex, getPositionById (tabId));
+               public void onTabSelected(int position) {
+                    switchFragment (curIndex,position);
+               }
+
+               @Override
+               public boolean onIntercept(int position) {
+                    return false;
                }
           });
+//          mBottomNavigationView.setOnNavigationItemSelectedListener (new BottomNavigationView.OnNavigationItemSelectedListener () {
+//               @Override
+//               public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                    switchFragment (curIndex,getPositionById (item.getItemId ()));
+//                    return false;
+//               }
+//          });
      }
 
      /**
@@ -77,23 +95,17 @@ public class MainActivity extends BaseActivity {
 
      private void switchFragment(int cur, int des) {
           if (cur != des) {
-//               List<Fragment> fragments = mManager.getFragments ();
-//               hideOtherFragment (fragments);
-//               mTransaction.show (newInstance (des));
                hideOtherFragment (des);
                curIndex = des;
           }
      }
-     private void initViewPager(){
-          mViewPager.setAdapter (new SessionAdapter (getSupportFragmentManager ()));
-     }
 
-     @Override
-     public boolean onCreateOptionsMenu(Menu menu) {
-          // Inflate the menu; this adds items to the action bar if it is present.
-          getMenuInflater ().inflate (R.menu.menu_main, menu);
-          return true;
-     }
+//     @Override
+//     public boolean onCreateOptionsMenu(Menu menu) {
+//          // Inflate the menu; this adds items to the action bar if it is present.
+//          getMenuInflater ().inflate (R.menu.menu_main, menu);
+//          return true;
+//     }
 
      @Override
      public boolean onOptionsItemSelected(MenuItem item) {
@@ -112,6 +124,34 @@ public class MainActivity extends BaseActivity {
      protected void onSaveInstanceState(Bundle outState) {
           super.onSaveInstanceState (outState);
 
+     }
+
+     @Override
+     public boolean onQueryTextSubmit(String query) {
+          return false;
+     }
+
+     @Override
+     public boolean onQueryTextChange(String newText) {
+          if(isLongTime ()){
+               //TODO goto request
+          }
+          return false;
+     }
+     private long lastTime=0;
+
+     /**
+      * 输入慢于1s 网络请求
+      * @return
+      */
+     private boolean isLongTime(){
+          long cur = System.currentTimeMillis ();
+          if(Math.abs (cur-lastTime)>1500){
+               lastTime=cur;
+               return true;
+          }
+          lastTime=cur;
+          return false;
      }
 
      private static class SessionAdapter extends FragmentPagerAdapter {

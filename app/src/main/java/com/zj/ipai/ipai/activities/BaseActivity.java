@@ -20,8 +20,6 @@ public abstract class BaseActivity extends AppCompatActivity {
      protected void onCreate(@Nullable Bundle savedInstanceState) {
           super.onCreate (savedInstanceState);
           setContentView (getLayout ());
-          Toolbar toolbar = (Toolbar) findViewById (R.id.toolbar);
-          setSupportActionBar (toolbar);
           ButterKnife.bind (this);
           initView (savedInstanceState);
      }
