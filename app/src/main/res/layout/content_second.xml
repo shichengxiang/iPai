@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/refreshLayout"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <android.support.design.widget.TabLayout
+            android:id="@+id/nav_tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabGravity="center"
+            app:tabIndicatorColor="@android:color/holo_green_light"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabTextColor="@color/txt_black"
+            app:tabMode="scrollable"
+            app:tabMinWidth="100dp"
+            app:tabTextAppearance="@style/MySearchView">
+
+        </android.support.design.widget.TabLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/search_layover_bg">
+
+        </android.support.v4.view.ViewPager>
+
+    </LinearLayout>
+
+</android.support.v4.widget.SwipeRefreshLayout>

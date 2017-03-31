@@ -1,5 +1,9 @@
 package com.zj.ipai.ipai;
 
+import org.junit.Test;
+
+import java.math.BigDecimal;
+
 /**
  * name of class: iPai
  * creater: scx
@@ -9,19 +13,16 @@ package com.zj.ipai.ipai;
 public class Atest {
      boolean hasCar, hasHouse, hasMoney;
 
-     private void marry() {
+     @Test
+     public void marry() {
+          BigDecimal bigDecimal=new BigDecimal (122754.03+500000.00+500000.00+60000000.00
+          +442833.23+213105.41+48924.40+46437.58+500000.00+500000.00+100000.00
+                  +500000.00+10000000.00+10000000.00+10000000.00+10000000.00+1401214.45
+                  +375.00+100000.00+100000.00+100000.00+100000.00+100000.00+200000.00+5000000.00+6000000.00+99902.25+500000.00+500000.00+1000000.00);
+          bigDecimal=new BigDecimal (1.00+1.00+1.00+1.00+1.00+1.00+1.00+1.00+1.00+1.00
+                  +1.00+1.00+1.00+1.00+27.35+1139695.69+200.00+139500.00+3890293.20
+                  +232.50+0.48+6483.83);
 
-          if (hasCar && hasHouse && hasMoney) {
-               alert ("娶媳妇去喽！");
-          } else if (hasCar || hasHouse || hasMoney) {
-               alert ("打扮下，相亲去！");
-          } else {
-               alert ("该干活了！");
-          }
-
-     }
-
-     private void alert(String s) {
      }
 
 }

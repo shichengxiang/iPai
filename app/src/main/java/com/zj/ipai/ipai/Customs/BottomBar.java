@@ -21,10 +21,10 @@ import java.util.List;
 
 public class BottomBar extends RelativeLayout {
      Context mContext;
-     int size = 3;
+     int size = 4;
      List<Item> items = new ArrayList<> ();
      private OnTabChangedListener mListener;
-     static int curIndex = 0;
+     static int curIndex = -1;
 
      public BottomBar(Context context) {
           super (context);
@@ -34,9 +34,6 @@ public class BottomBar extends RelativeLayout {
      public BottomBar(Context context, AttributeSet attrs) {
           super (context, attrs);
           this.mContext = context;
-     }
-
-     private void init() {
      }
 
      public void setLayout(@LayoutRes int layout, OnTabChangedListener lisener) {
@@ -51,15 +48,18 @@ public class BottomBar extends RelativeLayout {
           items.get (0).parent = inflate.findViewById (R.id.tab1);
           items.get (1).parent = inflate.findViewById (R.id.tab2);
           items.get (2).parent = inflate.findViewById (R.id.tab3);
+          items.get (3).parent = inflate.findViewById (R.id.tab4);
           items.get (0).iv = inflate.findViewById (R.id.iv_b1);
           items.get (1).iv = inflate.findViewById (R.id.iv_b2);
           items.get (2).iv = inflate.findViewById (R.id.iv_b3);
+          items.get (3).iv = inflate.findViewById (R.id.iv_b4);
           items.get (0).tv = inflate.findViewById (R.id.tv_b1);
           items.get (1).tv = inflate.findViewById (R.id.tv_b2);
           items.get (2).tv = inflate.findViewById (R.id.tv_b3);
+          items.get (3).tv = inflate.findViewById (R.id.tv_b4);
           this.mListener = lisener;
           setListener ();
-          addView (inflate,params);
+          addView (inflate, params);
           setBackgroundColor (Color.parseColor ("#cccccc"));
 
      }
@@ -74,6 +74,18 @@ public class BottomBar extends RelativeLayout {
                     }
                });
           }
+     }
+
+     public void clearFocus() {
+          for (int i = 0; i < size; i++) {
+               items.get (i).parent.setSelected (false);
+               items.get (i).iv.setSelected (false);
+               items.get (i).tv.setSelected (false);
+          }
+     }
+
+     public void setDefault(int des) {
+          changeState (des);
      }
 
      private void changeState(int choosed) {

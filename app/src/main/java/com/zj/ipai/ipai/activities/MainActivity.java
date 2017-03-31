@@ -1,20 +1,26 @@
 package com.zj.ipai.ipai.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.SearchView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.zj.ipai.ipai.Customs.BottomBar;
+import com.zj.ipai.ipai.Customs.PopupWindw;
 import com.zj.ipai.ipai.R;
+import com.zj.ipai.ipai.activities.customer.PicActivity;
 import com.zj.ipai.ipai.fragments.BaseFragment;
 import com.zj.ipai.ipai.fragments.FirstFragment;
+import com.zj.ipai.ipai.fragments.MineFragment;
 import com.zj.ipai.ipai.fragments.SecondFragment;
 import com.zj.ipai.ipai.fragments.ThirdFragment;
 
@@ -25,15 +31,17 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
      @NonNull
      @BindView (R.id.bottomBar)
      BottomBar mBottomBar;
+     @BindView (R.id.actionIpai)
+     View actionIpai;
 //     @BindView (R.id.bottom_nav)
 //     BottomNavigationView mBottomNavigationView;
 
-     private String[] tags = {"one", "two", "three"};
+     private String[] tags = {"one", "two", "three", "four", "center"};
      private int curIndex = 0;
 
      private FragmentManager mManager;
      private Fragment curFragment;
-     private BaseFragment fragment1, fragment2, fragment3;
+     private BaseFragment fragment1, fragment2, fragment3,mineFragment;
 
      @Override
      public int getLayout() {
@@ -57,7 +65,7 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
           mBottomBar.setLayout (R.layout.bottombar, new BottomBar.OnTabChangedListener () {
                @Override
                public void onTabSelected(int position) {
-                    switchFragment (curIndex,position);
+                    switchFragment (position);
                }
 
                @Override
@@ -65,6 +73,7 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
                     return false;
                }
           });
+          mBottomBar.setDefault (0);
 //          mBottomNavigationView.setOnNavigationItemSelectedListener (new BottomNavigationView.OnNavigationItemSelectedListener () {
 //               @Override
 //               public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -72,6 +81,16 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
 //                    return false;
 //               }
 //          });
+          setListener ();
+     }
+
+     private void setListener() {
+          actionIpai.setOnClickListener (new View.OnClickListener () {
+               @Override
+               public void onClick(View v) {
+                    showCenterUI ();
+               }
+          });
      }
 
      /**
@@ -86,20 +105,20 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
                FragmentTransaction mTransaction = mManager.beginTransaction ();
                mTransaction.add (R.id.contentContainer, newInstance (0), tags[0])
                        .add (R.id.contentContainer, newInstance (1), tags[1])
-                       .add (R.id.contentContainer, newInstance (2), tags[2]).hide (newInstance (1)).hide (newInstance (2)).show (curFragment).commit ();
+                       .add (R.id.contentContainer, newInstance (2), tags[2])
+                       .add (R.id.contentContainer,newInstance (3),tags[3]).hide (newInstance (1)).hide (newInstance (2)).hide (newInstance (3)).commit ();
           } else {//多次
                curFragment = mManager.getFragment (bundle, tags[curIndex]);
                hideOtherFragment (curIndex);
           }
      }
 
-     private void switchFragment(int cur, int des) {
-          if (cur != des) {
+     private void switchFragment(int des) {
+          if (curIndex != des) {
                hideOtherFragment (des);
                curIndex = des;
           }
      }
-
 //     @Override
 //     public boolean onCreateOptionsMenu(Menu menu) {
 //          // Inflate the menu; this adds items to the action bar if it is present.
@@ -133,24 +152,26 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
 
      @Override
      public boolean onQueryTextChange(String newText) {
-          if(isLongTime ()){
+          if (isLongTime ()) {
                //TODO goto request
           }
           return false;
      }
-     private long lastTime=0;
+
+     private long lastTime = 0;
 
      /**
       * 输入慢于1s 网络请求
+      *
       * @return
       */
-     private boolean isLongTime(){
+     private boolean isLongTime() {
           long cur = System.currentTimeMillis ();
-          if(Math.abs (cur-lastTime)>1500){
-               lastTime=cur;
+          if (Math.abs (cur - lastTime) > 1500) {
+               lastTime = cur;
                return true;
           }
-          lastTime=cur;
+          lastTime = cur;
           return false;
      }
 
@@ -209,6 +230,10 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
                     if (fragment3 == null)
                          fragment3 = new ThirdFragment ();
                     return fragment3;
+               case 3:
+                    if(mineFragment==null)
+                         mineFragment=new MineFragment ();
+                    return mineFragment;
           }
           return new FirstFragment ();
      }
@@ -223,6 +248,36 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
                }
           }
           transaction.commit ();
+     }
+
+     private PopupWindw window;
+
+     /**
+      * show UI when click the button of center;
+      */
+     private void showCenterUI() {
+          if (window == null) {
+               View inflate = LayoutInflater.from (this).inflate (R.layout.window_ipai, null);
+               window = new PopupWindw (this, inflate);
+               View close = inflate.findViewById (R.id.iv_closeWindow);
+               close.setOnClickListener (new View.OnClickListener () {
+                    @Override
+                    public void onClick(View v) {
+                         window.dismiss ();
+                    }
+               });
+               inflate.findViewById (R.id.close).setOnClickListener (new View.OnClickListener () {
+                    @Override
+                    public void onClick(View v) {
+                         window.dismiss ();
+                         startActivity (new Intent (v.getContext (), PicActivity.class));
+
+                    }
+               });
+          }
+          window.setAnimationStyle (R.style.popup_animation);
+          if (!window.isShowing ())
+               window.showAtLocation (actionIpai, Gravity.CENTER, 0, 0);
      }
 
 }

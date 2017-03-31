@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomBar"
+        android:fitsSystemWindows="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
     </FrameLayout>
 
@@ -29,11 +30,21 @@
 
     <!--</android.support.design.widget.BottomNavigationView>-->
 
+
     <com.zj.ipai.ipai.Customs.BottomBar
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp30"
-        android:layout_alignParentBottom="true"
-        android:fitsSystemWindows="true">
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dp15"
+        android:layout_alignParentBottom="true">
     </com.zj.ipai.ipai.Customs.BottomBar>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/actionIpai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/near_me"
+        android:layout_marginBottom="@dimen/dp2"/>
 </RelativeLayout>

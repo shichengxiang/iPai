@@ -3,8 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorAccent"
     android:orientation="horizontal"
-    android:background="@color/colorAccent">
+    android:paddingTop="@dimen/dp1"
+    android:paddingBottom="@dimen/dp1">
 
     <RelativeLayout
         android:id="@+id/tab1"
@@ -14,11 +16,11 @@
 
         <ImageView
             android:id="@+id/iv_b1"
-            android:layout_width="@dimen/dp20"
-            android:layout_height="@dimen/dp20"
+            android:layout_width="@dimen/dp15"
+            android:layout_height="@dimen/dp15"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_action_action_search"
-            android:scaleType="fitCenter"/>
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_action_action_search"/>
 
         <TextView
             android:id="@+id/tv_b1"
@@ -26,7 +28,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_b1"
             android:layout_centerHorizontal="true"
-            android:text="发现"/>
+            android:text="优选"
+            android:textSize="@dimen/dp8"
+            android:textColor="@color/selector_txt"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -37,11 +41,11 @@
 
         <ImageView
             android:id="@+id/iv_b2"
-            android:layout_width="@dimen/dp20"
-            android:layout_height="@dimen/dp20"
+            android:layout_width="@dimen/dp15"
+            android:layout_height="@dimen/dp15"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_action_action_search"
-            android:scaleType="fitCenter"/>
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_action_action_search"/>
 
         <TextView
             android:id="@+id/tv_b2"
@@ -49,8 +53,16 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_b2"
             android:layout_centerHorizontal="true"
-            android:text="发现"/>
+            android:text="发现"
+            android:textSize="@dimen/dp8"
+            android:textColor="@color/selector_txt"/>
     </RelativeLayout>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:clickable="false"/>
 
     <RelativeLayout
         android:id="@+id/tab3"
@@ -60,11 +72,11 @@
 
         <ImageView
             android:id="@+id/iv_b3"
-            android:layout_width="@dimen/dp20"
-            android:layout_height="@dimen/dp20"
+            android:layout_width="@dimen/dp15"
+            android:layout_height="@dimen/dp15"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_action_action_search"
-            android:scaleType="fitCenter"/>
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_action_action_search"/>
 
         <TextView
             android:id="@+id/tv_b3"
@@ -72,7 +84,34 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_b3"
             android:layout_centerHorizontal="true"
-            android:text="发现"/>
+            android:text="关注"
+            android:textSize="@dimen/dp8"
+            android:textColor="@color/selector_txt"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/tab4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/iv_b4"
+            android:layout_width="@dimen/dp15"
+            android:layout_height="@dimen/dp15"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_action_action_search"/>
+
+        <TextView
+            android:id="@+id/tv_b4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_b4"
+            android:layout_centerHorizontal="true"
+            android:text="我的"
+            android:textSize="@dimen/dp8"
+            android:textColor="@color/selector_txt"/>
     </RelativeLayout>
 
 </LinearLayout>
