@@ -14,8 +14,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.zj.ipai.ipai.Customs.BottomBar;
-import com.zj.ipai.ipai.Customs.PopupWindw;
+import com.zj.ipai.ipai.customs.BottomBar;
+import com.zj.ipai.ipai.customs.PopupWindw;
 import com.zj.ipai.ipai.R;
 import com.zj.ipai.ipai.activities.customer.PicActivity;
 import com.zj.ipai.ipai.fragments.BaseFragment;

@@ -3,15 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
     <FrameLayout
         android:id="@+id/contentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomBar"
-        android:fitsSystemWindows="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
     </FrameLayout>
 
@@ -31,13 +29,14 @@
     <!--</android.support.design.widget.BottomNavigationView>-->
 
 
-    <com.zj.ipai.ipai.Customs.BottomBar
+    <com.zj.ipai.ipai.customs.BottomBar
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/dp15"
-        android:layout_alignParentBottom="true">
-    </com.zj.ipai.ipai.Customs.BottomBar>
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+    </com.zj.ipai.ipai.customs.BottomBar>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/actionIpai"

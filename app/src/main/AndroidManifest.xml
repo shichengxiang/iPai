@@ -35,8 +35,7 @@
         </activity>
         <activity
             android:name=".activities.TestTabsActivity"
-            android:label="@string/title_activity_test_tabs"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/title_activity_test_tabs">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN"/> -->
@@ -48,6 +47,11 @@
         <activity
             android:name=".activities.customer.PicActivity"
             android:label="@string/title_activity_pic"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity
+            android:name=".activities.TestActivity"
+            android:label="@string/title_activity_test"
             android:theme="@style/AppTheme">
         </activity>
     </application>

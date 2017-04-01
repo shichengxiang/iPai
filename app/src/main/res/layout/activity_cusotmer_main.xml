@@ -36,12 +36,12 @@
         android:background="@android:color/darker_gray">
 
     </ScrollView>
-    <com.zj.ipai.ipai.Customs.BottomBar
+    <com.zj.ipai.ipai.customs.BottomBar
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
-    </com.zj.ipai.ipai.Customs.BottomBar>
+    </com.zj.ipai.ipai.customs.BottomBar>
 
 </RelativeLayout>

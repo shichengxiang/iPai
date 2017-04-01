@@ -3,5 +3,6 @@
     <style name="AppTheme" parent="AppTheme.Base">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/space_transparent</item>
     </style>
 </resources>

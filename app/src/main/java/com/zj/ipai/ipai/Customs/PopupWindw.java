@@ -1,4 +1,4 @@
-package com.zj.ipai.ipai.Customs;
+package com.zj.ipai.ipai.customs;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;

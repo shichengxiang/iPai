@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.zj.ipai.ipai.Customs.BottomBar;
+import com.zj.ipai.ipai.customs.BottomBar;
 import com.zj.ipai.ipai.R;
 
 import butterknife.BindView;

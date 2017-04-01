@@ -5,15 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg"
-    android:fitsSystemWindows="true"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context=".activities.MainActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar1"
         style="@style/toolBarStyle"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        android:fitsSystemWindows="true"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

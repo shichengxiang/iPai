@@ -31,7 +31,6 @@ import butterknife.ButterKnife;
  */
 
 public class FirstFragment extends BaseFragment {
-     private AppCompatActivity mActivity;
      //     @BindView (R.id.app_bar)
 //     AppBarLayout mAppBarLayout;
 //     @BindView (R.id.home_content)
@@ -59,13 +58,10 @@ public class FirstFragment extends BaseFragment {
      @Override
      public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
           super.onViewCreated (view, savedInstanceState);
-          mActivity= (AppCompatActivity) getActivity ();
           initView ();
      }
 
      private void initView() {
-          Toolbar toolbar= (Toolbar) mActivity.findViewById (R.id.toolbar1);
-          mActivity.setSupportActionBar (toolbar);
           initBanenr ();
           initTabLayout ();
 //          mAppBarLayout.setExpanded (false);

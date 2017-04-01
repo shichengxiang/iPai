@@ -3,16 +3,15 @@ package com.zj.ipai.ipai.fragments;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+import com.zj.ipai.ipai.customs.PullToZoomScrollView;
 import com.zj.ipai.ipai.R;
 
 import butterknife.BindView;
@@ -26,12 +25,14 @@ import butterknife.OnClick;
  */
 
 public class MineFragment extends BaseFragment {
-     @BindView (R.id.mAppBarLayout)
-     AppBarLayout mAppBarLayout;
-     @BindView (R.id.mToolbarLayout)
-     CollapsingToolbarLayout mToolbarLayout;
+
+     @BindView (R.id.zoomScrollView_personal)
+     PullToZoomScrollView mZoomScrollView;
+     @BindView (R.id.toolbar)
+     Toolbar mToolbar;
      @BindView (R.id.more)
      View mView_more;
+
      private PopupWindow mPopupWindow;
 
      @Nullable
@@ -49,15 +50,25 @@ public class MineFragment extends BaseFragment {
      }
 
      private void initView() {
-          mAppBarLayout.setExpanded (false);
-          mToolbarLayout.setTitle ("陈妍希");
-          mToolbarLayout.setExpandedTitleColor (Color.parseColor ("#451547"));
-          new Handler ().postDelayed (new Runnable () {
+          View zoom = LayoutInflater.from (getContext ()).inflate (R.layout.layout_personal_head, null);
+          View contentVeiw = LayoutInflater.from (getContext ()).inflate (R.layout.layout_persona_content, null);
+          mZoomScrollView.setHeaderView (LayoutInflater.from (getContext ()).inflate (R.layout.layout_personal_head,null));
+          mZoomScrollView.setZoomView (zoom);
+          mZoomScrollView.setScrollContentView (contentVeiw);
+          mZoomScrollView.setZoomEnabled (true);
+          mZoomScrollView.setOnScrollViewChangedListener (new PullToZoomScrollView.OnScrollViewChangedListener () {
                @Override
-               public void run() {
-                    mAppBarLayout.setExpanded (true);
+               public void onInternalScrollChanged(int left, int top, int oldLeft, int oldTop) {
+                    float v = Float.parseFloat (top + "");
+                    float n = v / 300;
+                    mToolbar.setAlpha (n);
                }
-          }, 4000);
+          });
+          int mScreenWidth = getResources ().getDisplayMetrics ().widthPixels;
+          LinearLayout.LayoutParams localObject = new LinearLayout.LayoutParams (
+                  mScreenWidth, getResources ().getDisplayMetrics ().heightPixels / 12 * 5);
+          mZoomScrollView.setHeaderLayoutParams (localObject);
+
      }
 
      @OnClick ({R.id.more})
@@ -80,6 +91,6 @@ public class MineFragment extends BaseFragment {
 
           }
           if (!mPopupWindow.isShowing ())
-               mPopupWindow.showAsDropDown (mView_more,0, (int) (12*getResources ().getDisplayMetrics ().density));
+               mPopupWindow.showAsDropDown (mView_more, 0, (int) (12 * getResources ().getDisplayMetrics ().density));
      }
 }

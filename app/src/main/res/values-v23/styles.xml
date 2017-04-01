@@ -3,7 +3,8 @@
     <style name="AppTheme" parent="AppTheme.Base">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/space_transparent</item>
         //状态栏字分明
-        <item name="android:windowLightStatusBar">true</item>
+        <!--<item name="android:windowLightStatusBar">true</item>-->
     </style>
 </resources>
