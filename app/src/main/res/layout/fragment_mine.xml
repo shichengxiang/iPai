@@ -7,20 +7,21 @@
     android:fitsSystemWindows="true"
     tools:context=".activities.MainActivity">
 
-    <com.zj.ipai.ipai.customs.PullToZoomScrollView
-        android:id="@+id/zoomScrollView_personal"
+    <com.zj.ipai.ipai.customs.pulltozoom.PullToZoomScrollViewEx
+        android:id="@+id/mPullToZoomScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none">
-    </com.zj.ipai.ipai.customs.PullToZoomScrollView>
+        android:background="@color/txt_hint">
+
+    </com.zj.ipai.ipai.customs.pulltozoom.PullToZoomScrollViewEx>
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/white"
         android:fitsSystemWindows="true"
-        android:layout_gravity="start">
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -28,17 +29,11 @@
             android:layout_gravity="center_vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_action_navigation_arrow_back"/>
-
-            <ImageView
                 android:id="@+id/more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:src="@drawable/bg_search"/>
+                android:layout_alignParentRight="true"
+                android:src="@drawable/near_me"/>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 

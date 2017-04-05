@@ -4,15 +4,13 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
-import com.zj.ipai.ipai.customs.PullToZoomScrollView;
 import com.zj.ipai.ipai.R;
+import com.zj.ipai.ipai.customs.pulltozoom.PullToZoomScrollViewEx;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,13 +24,12 @@ import butterknife.OnClick;
 
 public class MineFragment extends BaseFragment {
 
-     @BindView (R.id.zoomScrollView_personal)
-     PullToZoomScrollView mZoomScrollView;
-     @BindView (R.id.toolbar)
-     Toolbar mToolbar;
      @BindView (R.id.more)
      View mView_more;
+     @BindView (R.id.mPullToZoomScrollView)
+     PullToZoomScrollViewEx mPullToZoomScrollView;
 
+     private View zoomView;
      private PopupWindow mPopupWindow;
 
      @Nullable
@@ -50,25 +47,11 @@ public class MineFragment extends BaseFragment {
      }
 
      private void initView() {
-          View zoom = LayoutInflater.from (getContext ()).inflate (R.layout.layout_personal_head, null);
-          View contentVeiw = LayoutInflater.from (getContext ()).inflate (R.layout.layout_persona_content, null);
-          mZoomScrollView.setHeaderView (LayoutInflater.from (getContext ()).inflate (R.layout.layout_personal_head,null));
-          mZoomScrollView.setZoomView (zoom);
-          mZoomScrollView.setScrollContentView (contentVeiw);
-          mZoomScrollView.setZoomEnabled (true);
-          mZoomScrollView.setOnScrollViewChangedListener (new PullToZoomScrollView.OnScrollViewChangedListener () {
-               @Override
-               public void onInternalScrollChanged(int left, int top, int oldLeft, int oldTop) {
-                    float v = Float.parseFloat (top + "");
-                    float n = v / 300;
-                    mToolbar.setAlpha (n);
-               }
-          });
-          int mScreenWidth = getResources ().getDisplayMetrics ().widthPixels;
-          LinearLayout.LayoutParams localObject = new LinearLayout.LayoutParams (
-                  mScreenWidth, getResources ().getDisplayMetrics ().heightPixels / 12 * 5);
-          mZoomScrollView.setHeaderLayoutParams (localObject);
-
+          initAnimations ();
+     }
+     private void initAnimations(){
+          mPullToZoomScrollView.setAllView (R.layout.pull_to_refresh_head,R.layout.layout_personal_head,R.layout.layout_persona_content,0.1f);
+          mPullToZoomScrollView.computeScroll ();
      }
 
      @OnClick ({R.id.more})

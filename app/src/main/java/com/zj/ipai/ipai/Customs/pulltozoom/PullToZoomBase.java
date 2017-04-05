@@ -1,8 +1,9 @@
-package com.zj.ipai.ipai.customs;
+package com.zj.ipai.ipai.customs.pulltozoom;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -15,20 +16,13 @@ import android.widget.LinearLayout;
 
 import com.zj.ipai.ipai.R;
 
-/**
- * ���������������
- * @author sjy
- * @param <T>
- */
-public abstract class PullToZoomBase<T extends View> extends LinearLayout{
-
-	/**����ϵ��*/
-	private static final float FRICTION = 2.0f;
+public abstract class PullToZoomBase<T extends View> extends LinearLayout implements IPullToZoom<T> {
+    private static final float FRICTION = 2.0f;
     protected T mRootView;
-    protected View mHeaderView;//ͷ��View
-    protected View mZoomView;//��������View
-	
-	protected int mScreenHeight;
+    protected View mHeaderView;//头部View
+    protected View mZoomView;//缩放拉伸View
+
+    protected int mScreenHeight;
     protected int mScreenWidth;
 
     private boolean isZoomEnabled = true;
@@ -36,26 +30,25 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout{
     private boolean isZooming = false;
     private boolean isHideHeader = false;
 
+    private int mTouchSlop;
+    private boolean mIsBeingDragged = false;
+    private float mLastMotionY;
+    private float mLastMotionX;
+    private float mInitialMotionY;
+    private float mInitialMotionX;
+    private OnPullZoomListener onPullZoomListener;
 
-        private int mTouchSlop;
-        private boolean mIsBeingDragged = false;
-        private float mLastMotionY;
-        private float mLastMotionX;
-        private float mInitialMotionY;
-        private float mInitialMotionX;
+    public PullToZoomBase(Context context) {
+        this(context, null);
+    }
 
-        protected OnPullZoomListener onPullZoomListener;
+    public PullToZoomBase(Context context, AttributeSet attrs) {
+        super(context, attrs);
 
-        public PullToZoomBase(Context context) {
-            this(context, null);
-        }
+        init(context, attrs);
+    }
 
-        public PullToZoomBase(Context context, AttributeSet attrs) {
-            super(context, attrs);
-		init(context, attrs);
-	}
-
-	private void init(Context context, AttributeSet attrs) {
+    private void init(Context context, AttributeSet attrs) {
         setGravity(Gravity.CENTER);
 
         ViewConfiguration config = ViewConfiguration.get(context);
@@ -72,7 +65,7 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout{
 
         if (attrs != null) {
             LayoutInflater mLayoutInflater = LayoutInflater.from(getContext());
-            //��ʼ��״̬View
+            //初始化状态View
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.PullToZoomView);
 
             int zoomViewResId = a.getResourceId(R.styleable.PullToZoomView_zoomView, 0);
@@ -94,35 +87,42 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout{
         }
         addView(mRootView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     }
-	
-	public void setOnPullZoomListener(OnPullZoomListener onPullZoomListener) {
+
+    public void setOnPullZoomListener(OnPullZoomListener onPullZoomListener) {
         this.onPullZoomListener = onPullZoomListener;
     }
 
+    @Override
     public T getPullRootView() {
         return mRootView;
     }
 
+    @Override
     public View getZoomView() {
         return mZoomView;
     }
 
+    @Override
     public View getHeaderView() {
         return mHeaderView;
     }
 
+    @Override
     public boolean isPullToZoomEnabled() {
         return isZoomEnabled;
     }
 
+    @Override
     public boolean isZooming() {
         return isZooming;
     }
 
+    @Override
     public boolean isParallax() {
         return isParallax;
     }
 
+    @Override
     public boolean isHideHeader() {
         return isHideHeader;
     }
@@ -135,10 +135,10 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout{
         this.isParallax = isParallax;
     }
 
-    public void setHideHeader(boolean isHideHeader) {//header��ʾ����Zoom
+    public void setHideHeader(boolean isHideHeader) {//header显示才能Zoom
         this.isHideHeader = isHideHeader;
     }
-    
+
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
         if (!isPullToZoomEnabled() || isHideHeader()) {
@@ -157,7 +157,7 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout{
         }
         switch (action) {
             case MotionEvent.ACTION_MOVE: {
-                if (isReadyForPullDown()) {
+                if (isReadyForPullStart()) {
                     final float y = event.getY(), x = event.getX();
                     final float diff, oppositeDiff, absDiff;
 
@@ -168,7 +168,7 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout{
                     absDiff = Math.abs(diff);
 
                     if (absDiff > mTouchSlop && absDiff > Math.abs(oppositeDiff)) {
-                        if (diff >= 1f && isReadyForPullDown()) {
+                        if (diff >= 1f && isReadyForPullStart()) {
                             mLastMotionY = y;
                             mLastMotionX = x;
                             mIsBeingDragged = true;
@@ -178,7 +178,7 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout{
                 break;
             }
             case MotionEvent.ACTION_DOWN: {
-                if (isReadyForPullDown()) {
+                if (isReadyForPullStart()) {
                     mLastMotionY = mInitialMotionY = event.getY();
                     mLastMotionX = mInitialMotionX = event.getX();
                     mIsBeingDragged = false;
@@ -189,10 +189,9 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout{
 
         return mIsBeingDragged;
     }
-    
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(@NonNull MotionEvent event) {
         if (!isPullToZoomEnabled() || isHideHeader()) {
             return false;
         }
@@ -214,7 +213,7 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout{
             }
 
             case MotionEvent.ACTION_DOWN: {
-                if (isReadyForPullDown()) {
+                if (isReadyForPullStart()) {
                     mLastMotionY = mInitialMotionY = event.getY();
                     mLastMotionX = mInitialMotionX = event.getX();
                     return true;
@@ -232,13 +231,11 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout{
                         if (onPullZoomListener != null) {
                             onPullZoomListener.onPullZoomEnd();
                         }
-                        onZoomRelease(mInitialMotionY, mLastMotionY);
                         isZooming = false;
                         return true;
                     }
                     return true;
                 }
-                
                 break;
             }
         }
@@ -260,8 +257,6 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout{
         }
     }
 
-    public abstract void handleStyledAttributes(TypedArray a);
-    
     protected abstract void pullHeaderToZoom(int newScrollValue);
 
     public abstract void setHeaderView(View headerView);
@@ -272,25 +267,11 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout{
 
     protected abstract void smoothScrollToTop();
 
-    protected abstract boolean isReadyForPullDown();
-    
-    protected abstract boolean isReadyForPullUp();
-    
-    /**
-     * �ͷ�����
-     * @param initMotionY ���ſ�ʼʱ��Yλ��
-     * @param lastMotionY �����ͷ�ʱ��Yλ��
-     */
-    protected abstract void onZoomRelease(float initMotionY, float lastMotionY);
-    
+    protected abstract boolean isReadyForPullStart();
+
     public interface OnPullZoomListener {
-    	
         public void onPullZooming(int newScrollValue);
 
         public void onPullZoomEnd();
-        
-        public void onRefresh();
-        
-        public void onLoad();
     }
 }
